@@ -38,11 +38,11 @@ extern const int TOKEN_TYPE_DOTTED_NUM;
 #include "CSHMemDebug.h"
 #include <string.h>
 #include <ctype.h>
+#include <stdio.h>
 
 class token
 {
 	public:
-		DEBUG_THIS_CLASS;
 		token():tokType(TOKEN_TYPE_UNDEF){};
 		virtual ~token()
 		{
