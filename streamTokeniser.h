@@ -98,6 +98,7 @@ void streamTokeniser<rClass,streamClass>::tokenise(streamClass *sc)
 	scObj = sc;
 	internal_initTokenList();
 	
+	reciever->startTokenise();
 
 	// = fread(&ach,1,1,f);
 	skipToNextToken();
@@ -242,6 +243,8 @@ void streamTokeniser<rClass,streamClass>::skipToNextToken()
 	doReadNextChar(1);
 	while((charsRead==1) && ((ach==' ') || (ach=='\t') || (ach=='\r') || (ach=='\n')))
 	  {
+		if(ach=='\n')
+			reciever->newline();
 		doReadNextChar(1);
 	  }
 }
