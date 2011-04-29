@@ -102,8 +102,6 @@ class token
 		int tokType;
 };
 
-#define QUOTEDSTRINGVALIDCHARS "_ %%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789)(:,{;->}!\\/.*<>?+#=$'\t"
-
 class doubleQuotedStringToken : public token
 {
 	public:
@@ -227,7 +225,7 @@ class singleQuotedStringToken : public token
 
 		virtual char *getTermCharList()
 		{
-			return " \t\r\n)],;";
+			return " \t\r\n)],;:+";
 		}
 
 		virtual void injectChar(char ch)
@@ -247,6 +245,9 @@ class singleQuotedStringToken : public token
 			{
 				currState = TOKEN_STATE_MATCH_ERROR;
 			}
+			else if(currState==TOKEN_STATE_MATCH_ERROR)
+			{
+			}
 			else
 			{
 				if(firstChar)
@@ -259,8 +260,7 @@ class singleQuotedStringToken : public token
 				}
 				else
 				{
-					CSHString validChars = QUOTEDSTRINGVALIDCHARS;
-					if(charInList(ch,validChars))
+					if(ch!='\'')
 					{
 						string.Cat(ch);
 						firstChar = 0;
@@ -321,7 +321,6 @@ class singleQuotedStringToken : public token
 		int currState;
 		int firstChar;
 };
-
 
 class identifierToken : public token
 {
