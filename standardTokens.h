@@ -102,7 +102,7 @@ class token
 		int tokType;
 };
 
-#define QUOTEDSTRINGVALIDCHARS "_ %%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789)(:,{;->}!\\/.*<>?+#=$"
+#define QUOTEDSTRINGVALIDCHARS "_ %%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789)(:,{;->}!\\/.*<>?+#=$'\t"
 
 class doubleQuotedStringToken : public token
 {
@@ -117,7 +117,7 @@ class doubleQuotedStringToken : public token
 
 		virtual char *getTermCharList()
 		{
-			return " \t\r\n)],;";
+			return " \t\r\n)],;:+";
 		}
 
 		virtual void injectChar(char ch)
@@ -152,8 +152,7 @@ class doubleQuotedStringToken : public token
 				}
 				else
 				{
-					CSHString validChars = QUOTEDSTRINGVALIDCHARS;
-					if(charInList(ch,validChars))
+					if(ch!='\"')
 					{
 						string.Cat(ch);
 						firstChar = 0;
@@ -379,7 +378,7 @@ class simpleToken : public token
 
 		virtual char *getTermCharList()
 		{
-			return "; \n\r\t,[]:().*";
+			return "; \n\r\t,[]:().*<>+";
 		}
 
 		virtual token *makeClone()
@@ -509,7 +508,7 @@ class SYMBOLToken : public simpleToken
 
 		virtual char *getTermCharList()
 		{
-			return ".+-*/(),;[] \"\t\r\n'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			return ".+-*/(),;[] \"\t\r\n'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:<>";
 		}
 
 		virtual CSHString *getRep()

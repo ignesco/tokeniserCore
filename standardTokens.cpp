@@ -35,7 +35,7 @@ const int TOKEN_TYPE_DOTTED_NUM	=0x07;
 
 char *identifierToken::getTermCharList()
 {
-	return " \r\t\n()\\/;-',[=";
+	return " \r\t\n()\\/;-',[=><.:+";
 }
 
 token *identifierToken::makeClone()
